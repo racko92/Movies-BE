@@ -21,7 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('movies', 'MoviesController@index');
+Route::get('movies/', 'MoviesController@index');
 Route::get('movies/{id}', 'MoviesController@show');
 Route::delete('movies/{id}', 'MoviesController@destroy');
 Route::post('movies', 'MoviesController@store');

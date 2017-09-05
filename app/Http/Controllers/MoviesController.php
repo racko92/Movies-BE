@@ -12,8 +12,14 @@ class MoviesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $name = $request->get('name');
+
+        if($name){
+            return $this->searchByName($name);
+        }
+
         return Movie::all();
     }
 
@@ -77,7 +83,13 @@ class MoviesController extends Controller
     public function update(Request $request, $id)
     {
         $movie = Movie::findOrFail($id);
-        $movie->update($request->all());
+        $movie->update($request->all(), [
+            'name' => 'required|unique:movies',
+            'director' => 'required',
+            'duration' => 'required|between:1-500',
+            'releaseDate' => 'required|unique:movies',
+            'imageUrl' => 'url'
+        ]);
         return $movie;
     }
 
@@ -92,5 +104,9 @@ class MoviesController extends Controller
         $movie = Movie::findOrFail($id);
         $movie->delete();
         return $movie;
+    }
+
+    public function searchByName($name){
+        return Movie::where('name', 'like', '%' . $name . '%')->get();
     }
 }
