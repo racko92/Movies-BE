@@ -7,20 +7,19 @@ use App\Movie;
 
 class MoviesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    const defaultTake = 10;
+    const defaultSkip = '';
+
     public function index(Request $request)
     {
         $name = $request->get('name');
+        $take = $request->has('take') ? $request->get('take') : self::defaulTake;
+        $skip = $request->has('skip') ? $request->get('skip') : self::defaultSkip;
 
         if($name){
             return $this->searchByName($name);
         }
-
-        return Movie::all();
+        return Movie::skip($skip)->take($take)->get();
     }
 
     /**
@@ -107,6 +106,6 @@ class MoviesController extends Controller
     }
 
     public function searchByName($name){
-        return Movie::where('name', 'like', '%' . $name . '%')->get();
+        return Movie::where('name', 'like', '%' . $name . '%')->paginate();
     }
 }
