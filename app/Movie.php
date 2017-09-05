@@ -7,9 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 class Movie extends Model
 {
 
+    protected $fillable = [
+        'name',
+        'director',
+        'imageUrl',
+        'duration',
+        'releaseDate',
+        'genres'
+    ];
+
+
     public function getGenresAttribute($value){
 
-        return json_dencode($value, true);
+        return json_decode($value, true);
     }
 
     public function setGenresAttribute($value){
