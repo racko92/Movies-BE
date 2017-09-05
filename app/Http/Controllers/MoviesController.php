@@ -35,7 +35,14 @@ class MoviesController extends Controller
      */
     public function store(Request $request)
     {
-        return Movie::create($request->all());
+        return Movie::create($request->all(), [
+            'name' => 'required|unique:movies',
+            'director' => 'required',
+            'duration' => 'required|between:1-500',
+            'releaseDate' => 'required|unique:movies',
+            'imageUrl' => 'url'
+
+        ]);
     }
 
     /**
