@@ -19,8 +19,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('movies', 'MoviesController@index');
-Route::get('movies/{id}', 'MoviesController@show');
-Route::delete('movies/{id}', 'MoviesController@destroy');
-Route::post('movies', 'MoviesController@store');
-Route::put('movies/{id}', 'MoviesController@update');
+//Route::get('movies', 'MoviesController@index');
+//Route::get('movies/{id}', 'MoviesController@show');
+//Route::delete('movies/{id}', 'MoviesController@destroy');
+//Route::post('movies', 'MoviesController@store');
+//Route::put('movies/{id}', 'MoviesController@update');
+
+Route::middleware('jwt')->resource('movies', 'MoviesController');
+Route::post('login', 'Auth\LoginController@authenticate');
