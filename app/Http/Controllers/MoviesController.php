@@ -13,13 +13,12 @@ class MoviesController extends Controller
     public function index(Request $request)
     {
         $name = $request->get('name');
-        $take = $request->has('take') ? $request->get('take') : self::defaulTake;
-        $skip = $request->has('skip') ? $request->get('skip') : self::defaultSkip;
-
         if($name){
             return $this->searchByName($name);
         }
-        return Movie::skip($skip)->take($take)->get();
+//
+//      return Movie::skip($request->get('skip', self::defaultSkip))->take($request->get('take', self::defaultTake))->get();
+        return Movie::all();
     }
 
     /**
@@ -40,12 +39,14 @@ class MoviesController extends Controller
      */
     public function store(Request $request)
     {
+
         return Movie::create($request->all(), [
             'name' => 'required|unique:movies',
             'director' => 'required',
             'duration' => 'required|between:1,500',
             'releaseDate' => 'required|unique:movies',
-            'imageUrl' => 'url'
+            'imageUrl' => 'url',
+            'genres' => 'required|array'
 
         ]);
     }

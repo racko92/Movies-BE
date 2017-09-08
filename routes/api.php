@@ -2,9 +2,7 @@
 
 use Illuminate\Http\Request;
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('movies/', 'MoviesController@index');
+Route::get('movies', 'MoviesController@index');
 Route::get('movies/{id}', 'MoviesController@show');
 Route::delete('movies/{id}', 'MoviesController@destroy');
 Route::post('movies', 'MoviesController@store');
